@@ -1,6 +1,8 @@
 import Head from "next/head";
 
 import UsersComponent from "../../components/users";
+import {useEffect} from "react";
+import Const from "@/config/const";
 
 const UsersPage = (props) => {
 
@@ -12,8 +14,7 @@ const UsersPage = (props) => {
                 <meta name="keywords" content='' />
             </Head>
 
-            <UsersComponent/>
-            <p>This data from the SSR: <b>{props.data}</b></p>
+            <UsersComponent serverData={props.data}/>
         </>
     );
 };
@@ -27,7 +28,7 @@ export async function getServerSideProps() {
 
     return {
         props: {
-            data: "data"
+            data: [{id: 1000000, serverUser: true}]
         }
     };
 }

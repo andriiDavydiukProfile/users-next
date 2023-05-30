@@ -3,13 +3,14 @@ import Link from "next/link";
 import PropTypes from 'prop-types';
 
 const UsersComponent = ({
+  serverData,
   collection,
   loading,
   fetchUsers
 }) => {
   useEffect(() => {
     if (collection.length) return;
-    fetchUsers()
+    fetchUsers(serverData)
   }, []);
 
   return (
@@ -24,6 +25,7 @@ const UsersComponent = ({
             <Link href={ `/users/${ user.id }` }>
               user id =
               { user.id }
+              {user?.serverUser && " server user"}
             </Link>
           </div>
         ))
