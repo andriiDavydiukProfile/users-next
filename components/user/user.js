@@ -12,7 +12,6 @@ const UserComponent = ({
   const router = useRouter();
   const { id } = router.query;
   useEffect(() => {
-    console.log(user);
     if (Number(user.id) === parseInt(id, 10)) return;
     fetchUser(id)
   }, [id]);
