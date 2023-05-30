@@ -20,7 +20,10 @@ const UsersComponent = ({
         loading ? 'loading...' : ''
       }
       {
-        (collection || []).map(user => (
+        // if we need to get users from SSR we need to map serverData
+        // if we need to get them on client side we map our collection from redux(our server data saved in redux)
+        // if we don't need to pass any server data , we just map our collection
+        (serverData || collection ).map(user => (
           <div key={ user.id }>
             <Link href={ `/users/${ user.id }` }>
               user id =
