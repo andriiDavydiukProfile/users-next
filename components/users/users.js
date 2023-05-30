@@ -25,7 +25,6 @@ const UsersComponent = ({
             <Link href={ `/users/${ user.id }` }>
               user id =
               { user.id }
-              {user?.serverUser && " server user"}
             </Link>
           </div>
         ))
