@@ -3,14 +3,13 @@ import Link from "next/link";
 import PropTypes from 'prop-types';
 
 const UsersComponent = ({
-  serverData,
   collection,
   loading,
   fetchUsers
 }) => {
-  useEffect(() => {
-    if (collection.length) return;
-    fetchUsers(serverData)
+ useEffect(() => {
+    if (collection?.length) return;
+    fetchUsers()
   }, []);
 
   return (
@@ -20,10 +19,7 @@ const UsersComponent = ({
         loading ? 'loading...' : ''
       }
       {
-        // if we need to get users from SSR we need to map serverData
-        // if we need to get them on client side we map our collection from redux(our server data saved in redux)
-        // if we don't need to pass any server data , we just map our collection
-        (serverData || collection ).map(user => (
+        collection?.map(user => (
           <div key={ user.id }>
             <Link href={ `/users/${ user.id }` }>
               user id =

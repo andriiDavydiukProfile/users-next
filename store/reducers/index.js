@@ -5,7 +5,7 @@ import user from './user';
 
 const rootReducer = combineReducers({
   user,
-  users
+  users,
 });
 
 export default rootReducer;

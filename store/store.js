@@ -1,8 +1,8 @@
-import { createStore, applyMiddleware } from "redux";
+import {createStore, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
-import { createWrapper } from "next-redux-wrapper";
-import rootReducer from "./reducers";
+import {createWrapper, HYDRATE} from "next-redux-wrapper";
 import { createLogger } from 'redux-logger';
+import rootReducer from "@/store/reducers";
 
 const initalState = {};
 
@@ -11,8 +11,22 @@ const logger = createLogger({ diff: false });
 const middleWares = process.env.NODE_ENV !== 'development'
     ? applyMiddleware(...[thunk])
     : applyMiddleware(...[thunk, logger]);
+
+const reducer = (state, action) => {
+    if (action.type === HYDRATE) {
+        const nextState = {
+            ...state,
+            ...action.payload,
+        };
+        if (state.count) nextState.count = state.count;
+        return nextState;
+    } else {
+        return rootReducer(state, action);
+    }
+};
+
 export const store = createStore(
-    rootReducer,
+    reducer,
     initalState,
     middleWares
 );
@@ -32,4 +46,4 @@ if (typeof window !== 'undefined') {
 
 const makeStore = () => store;
 
-export const wrapper = createWrapper(makeStore);
+export const wrapper = createWrapper(makeStore, { debug: true });

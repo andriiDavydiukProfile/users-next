@@ -2,10 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import '../../../next_migration/my-app/pages/reset.css';
 import Head from "next/head";
-import { wrapper, store } from "@/store/store";
+import { wrapper } from "@/store/store";
 
 
-function MyApp({ Component, pageProps }) {
+function MyApp({Component, ...rest}) {
+  const {store, pageProps} = wrapper.useWrappedStore(rest);
   return (
       <>
         <Head>
@@ -19,4 +20,4 @@ function MyApp({ Component, pageProps }) {
 }
 
 
-export default wrapper.withRedux(MyApp);
+export default MyApp

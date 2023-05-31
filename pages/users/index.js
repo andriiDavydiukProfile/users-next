@@ -1,11 +1,10 @@
 import Head from "next/head";
 
 import UsersComponent from "../../components/users";
-import {useEffect} from "react";
+import {wrapper} from "@/store/store";
 import Const from "@/config/const";
 
-const UsersPage = (props) => {
-
+const UsersPage = () => {
     return (
         <>
             <Head>
@@ -14,25 +13,21 @@ const UsersPage = (props) => {
                 <meta name="keywords" content='' />
             </Head>
 
-            <UsersComponent serverData={props.data}/>
+            <div>
+                <UsersComponent/>
+            </div>
         </>
     );
 };
 
 
-export async function getServerSideProps() {
-
-    // Make an API request to fetch data
-    // const response = await axios.get('https://purple.api.server');
-    // const data = response.data;
-
-    return {
-        props: {
-            data: [{id: 1000000, serverUser: true}]
-        }
-    };
-}
-
+export const getServerSideProps = wrapper.getServerSideProps(store  => {
+    const serverUsers =  [{ id:2 }, {id:22}, {id:222}, {id:2222}];
+    store.dispatch({
+        type: Const.users.success,
+        users: serverUsers
+    })
+});
 
 export default UsersPage
 
